@@ -1,0 +1,40 @@
+@import "./common.scss";
+
+#dumperView {
+  text-align: center;
+}
+
+.userInfo {
+  background-color: $spotify-green;
+  color: white;
+  font-size: 150%;
+  img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid white;
+  }
+  //   :last-child {
+  //   }
+  padding: 2% 0 2% 0;
+}
+
+svg {
+  width: 100px;
+  height: 100px;
+}
+.dumper-content {
+  display: flex;
+  align-items: center;
+}
+
+.ui.cards {
+  margin-top: 2%;
+  .card {
+    margin: 0 2% 0 2%;
+  }
+  .cardBody {
+    height: 100%;
+  }
+}
