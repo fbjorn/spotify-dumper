@@ -1,5 +1,6 @@
 import * as React from "react";
-import { Button } from "semantic-ui-react";
+// import { Button } from "semantic-ui-react";
+import Button from "react-bootstrap/Button";
 
 import API from "../misc/api";
 import { IUserResponse } from "../misc/types";

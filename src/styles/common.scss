@@ -1,2 +1,33 @@
 $spotify-green: #1db954;
 $spotify-black: #191414;
+
+$btn-color: $spotify-green;
+$btn-hovered-color: saturate($btn-color, 10%);
+$btn-active-color: darken($btn-hovered-color, 5%);
+$btn-border-default: 1px soild $btn-hovered-color;
+
+$font-size-md: 16px;
+$font-size-sm: 14px;
+$font-size-bg: 20px;
+
+.btn {
+  background-color: $btn-color;
+  border: $btn-border-default;
+  border-color: $btn-hovered-color;
+  outline: none;
+
+  &:hover {
+    background-color: $btn-hovered-color;
+    border: $btn-border-default;
+    border-color: $btn-hovered-color;
+  }
+  &:active {
+    background-color: $btn-active-color;
+    border: $btn-border-default;
+    border-color: $btn-hovered-color;
+  }
+}
+
+* {
+  font-family: "Lato", sans-serif;
+}

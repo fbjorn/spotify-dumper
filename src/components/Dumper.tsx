@@ -1,6 +1,6 @@
 import * as React from "react";
 import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
-import { Button, Card } from "semantic-ui-react";
+// import { Button, Card } from "semantic-ui-react";
 
 import API from "../misc/api";
 import { ITrack, ITracksResponse, IUserInfo } from "../misc/types";
@@ -83,9 +83,40 @@ export default class PlaylistDumper extends React.Component<IProps, IState> {
       <div id="dumperView">
         <div className="userInfo">
           <img src={this.props.userInfo.avatar} />
-          <p>Hello, {this.props.userInfo.username}</p>
+          <h1>Hello, {this.props.userInfo.username}</h1>
         </div>
-        <Card.Group centered={true}>
+        <div className="card-deck">
+          <article className="card">
+            <header>Export your Liked Songs</header>
+            <footer className="dumper-content">
+              <div>
+                <CircularProgressbar
+                  value={percentage}
+                  text={`${percentage}%`}
+                  styles={buildStyles({
+                    pathColor: "#1db954",
+                    textColor: "#1db954",
+                    // trailColor: "white"
+                  })} // unable to apply css rules here for some dumb reason
+                />
+              </div>
+              <div>
+                <button
+                  disabled={this.state.isFetching}
+                  onClick={this.startSongsFetching}
+                  className="btn"
+                >
+                  Start
+                </button>
+              </div>
+            </footer>
+          </article>
+          <article className="card">
+            <header>Export your playlists</header>
+            <footer>Coming soon</footer>
+          </article>
+        </div>
+        {/* <Card.Group centered={true}>
           <Card>
             <Card.Content>
               <Card.Header>Export your Liked Songs</Card.Header>
@@ -118,7 +149,7 @@ export default class PlaylistDumper extends React.Component<IProps, IState> {
             </Card.Content>
             <Card.Content className="cardBody">Coming soon</Card.Content>
           </Card>
-        </Card.Group>
+        </Card.Group> */}
       </div>
     );
   }

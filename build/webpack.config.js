@@ -2,6 +2,9 @@ const path = require ('path');
 const webpack = require ('webpack');
 const HWP = require ('html-webpack-plugin');
 const MiniCssExtractPlugin = require ('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require ('optimize-css-assets-webpack-plugin');
+const TerserJSPlugin = require ('terser-webpack-plugin');
+
 const devMode = process.env.NODE_ENV !== 'production';
 
 module.exports = {
@@ -81,7 +84,17 @@ module.exports = {
       },
       {
         test: /\.jpe?g$|\.gif$|\.ico$|\.png$|\.svg$/,
-        use: 'file-loader?name=[name].[ext]?[hash]',
+        use: [
+          'file-loader?name=[name].[ext]?[hash]',
+          {
+            loader: 'image-webpack-loader',
+            options: {
+              enforce: 'pre',
+              // bypassOnDebug: true, // webpack@1.x
+              // disable: true, // webpack@2.x and newer
+            },
+          },
+        ],
       },
 
       // the following 3 rules handle font extraction
@@ -153,6 +166,9 @@ module.exports = {
     new MiniCssExtractPlugin (),
     new webpack.DefinePlugin ({PRODUCTION: JSON.stringify (!devMode)}),
   ],
+  optimization: {
+    minimizer: [new TerserJSPlugin ({}), new OptimizeCSSAssetsPlugin ({})],
+  },
   // externals: {
   //   react: 'React',
   //   'react-dom': 'ReactDOM',

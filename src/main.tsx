@@ -5,7 +5,6 @@ import App from "./components/App";
 import CallbackView from "./components/AuthCallback";
 
 import "react-circular-progressbar/dist/styles.css";
-import "fomantic-ui-less/semantic.less";
 import "./styles/auth.scss";
 import "./styles/dumper.scss";
 
