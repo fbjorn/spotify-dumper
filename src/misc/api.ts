@@ -17,11 +17,11 @@ class SpotifyAPI {
     };
   }
 
-  public getLoginURL(state: string) {
+  public getLoginURL(state: string): string {
     return (
       Conf.SPOTIFY_AUTH_URL +
       `?client_id=${Conf.OAUTH_CLIENT_ID}` +
-      `&redirect_uri=${encodeURI(Conf.OAUTH_REDIRECT_URI)}` +
+      `&redirect_uri=${encodeURIComponent(Conf.OAUTH_REDIRECT_URI)}` +
       `&scope=${Conf.REQUIRED_SCOPES.join("&")}` +
       `&state=${state}` +
       "&response_type=token"

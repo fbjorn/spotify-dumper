@@ -1,5 +1,5 @@
 import * as React from "react";
-import { BrowserRouter as Router, RouteComponentProps } from "react-router-dom";
+import { Redirect, RouteComponentProps } from "react-router-dom";
 
 import API from "../misc/api";
 import { IUserResponse } from "../misc/types";
@@ -10,7 +10,7 @@ export default class CallbackView extends React.PureComponent<
 > {
   public render() {
     const regexp = /access_token=(.*?)\&.*expires_in=(\d+)/;
-    const match = this.props.location.hash.match(regexp);
+    const match = this.props.location.state.match(regexp);
     let label = <p>Something went wrong please try again</p>;
     if (match) {
       const [_, token, expires] = match;
