@@ -25,7 +25,7 @@ case "$response" in
     [yY][eE][sS]|[yY]) 
         git add .
         git commit -m "Update pages"
-        [ "$!" -e 0 ] && git push
+        [ $? -eq 0 ] && git push
         ;;
     *)
         exit 1
