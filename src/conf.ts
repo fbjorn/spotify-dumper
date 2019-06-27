@@ -10,8 +10,8 @@ const config = {
 };
 
 if (PRODUCTION) {
-  config.OAUTH_REDIRECT_URI = "https://fbjorn.github.io/spd-pages/";
-  config.PUBLIC_URL = "/spd-pages";
+  config.OAUTH_REDIRECT_URI = "https://fbjorn.github.io/spotify/";
+  config.PUBLIC_URL = "/spotify";
 }
 
 export default config;
