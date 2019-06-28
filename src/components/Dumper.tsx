@@ -4,6 +4,7 @@ import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
 import API from "../misc/api";
 import { ITrack, ITracksResponse, IUserInfo } from "../misc/types";
 import * as utils from "../misc/utils";
+import FrequentArtists from "./FrequentArtists";
 
 interface IProps {
   userInfo: IUserInfo;
@@ -15,11 +16,13 @@ interface IState {
   percentage: number;
   offsetLength: number;
   tracks: ITrack[];
+  frequentArtists: { [name: string]: number };
 }
 
 export default class PlaylistDumper extends React.Component<IProps, IState> {
   public readonly initialState: IState = {
     current: 0,
+    frequentArtists: {},
     isFetching: false,
     offsetLength: 20,
     percentage: 0,
@@ -54,17 +57,34 @@ export default class PlaylistDumper extends React.Component<IProps, IState> {
         const percentage = Math.round(
           (response.next ? current / total : 1) * 100,
         );
+        let frequentArtists = JSON.parse(
+          JSON.stringify(this.state.frequentArtists),
+        ); // bad
         const items = response.items.map((item: any) => ({
-          artists: item.track.artists.map((artist: any) => ({
-            name: artist.name,
-          })),
+          artists: item.track.artists.map((artist: any) => {
+            const name = artist.name;
+            const currentCount = frequentArtists[name] || 0;
+            frequentArtists[name] = currentCount + 1;
+            return { name };
+          }),
           id: item.track.id,
           name: item.track.name,
         }));
 
+        if (!isFetching) {
+          // sort by songs count and reduce it to top 5 results
+          frequentArtists = Object.keys(frequentArtists)
+            .sort((a, b) => frequentArtists[b] - frequentArtists[a])
+            .slice(0, 5)
+            .reduce((acc: any, cur: string) => {
+              acc[cur] = frequentArtists[cur];
+              return acc;
+            }, {});
+        }
         this.setState(
           {
             current,
+            frequentArtists,
             isFetching,
             percentage,
             total,
@@ -126,6 +146,10 @@ export default class PlaylistDumper extends React.Component<IProps, IState> {
             <footer>Coming soon</footer>
           </article>
         </div>
+        <FrequentArtists
+          visible={!isFetching}
+          likedSongs={this.state.frequentArtists}
+        ></FrequentArtists>
       </div>
     );
   }

@@ -1,0 +1,32 @@
+@import "./common.scss";
+
+#frequentArtistsView {
+  margin-top: 20px;
+  h1 {
+    font-size: $font-size-md;
+  }
+}
+
+.freqArtist {
+  display: flex;
+}
+
+.freqArtist {
+  background-color: $spotify-green;
+  color: white;
+  font-size: $font-size-sm;
+  display: inline-block;
+  border-radius: 7px;
+  margin: 0 5px 0 5px;
+  div {
+    display: inline-block;
+    padding: 1px 5px 1px 5px;
+  }
+  :first-child {
+    border-right: 1px solid white;
+    padding-right: 4px;
+  }
+  :last-child {
+    padding-left: 4px;
+  }
+}

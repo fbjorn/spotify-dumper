@@ -8,6 +8,7 @@ import Conf from "./conf";
 import "react-circular-progressbar/dist/styles.css";
 import "./styles/auth.scss";
 import "./styles/dumper.scss";
+import "./styles/frequentArtists.scss";
 
 class Main extends React.PureComponent {
   public render() {
