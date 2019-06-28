@@ -1,6 +1,5 @@
 import * as React from "react";
 import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
-// import { Button, Card } from "semantic-ui-react";
 
 import API from "../misc/api";
 import { ITrack, ITracksResponse, IUserInfo } from "../misc/types";
@@ -31,6 +30,10 @@ export default class PlaylistDumper extends React.Component<IProps, IState> {
 
   public logout = () => {
     utils.clearCache();
+  };
+
+  public downloadJSON = () => {
+    utils.saveJSON(this.state.tracks, "spotify");
   };
 
   public startSongsFetching = () => {
@@ -78,11 +81,26 @@ export default class PlaylistDumper extends React.Component<IProps, IState> {
   };
 
   public render() {
-    const { current, total, percentage } = this.state;
+    const { current, total, percentage, tracks, isFetching } = this.state;
+    const tracksReady = !isFetching && tracks.length > 0;
+    const actionButton = tracksReady ? (
+      <button onClick={this.downloadJSON} className="btn">
+        Save
+      </button>
+    ) : (
+      <button
+        disabled={this.state.isFetching}
+        onClick={this.startSongsFetching}
+        className="btn"
+      >
+        Start
+      </button>
+    );
+    const defaultAvatar = require("../assets/no-avatar.png");
     return (
       <div id="dumperView">
         <div className="userInfo">
-          <img src={this.props.userInfo.avatar} />
+          <img src={this.props.userInfo.avatar || defaultAvatar} />
           <h1>Hello, {this.props.userInfo.username}</h1>
         </div>
         <div className="card-deck">
@@ -100,15 +118,7 @@ export default class PlaylistDumper extends React.Component<IProps, IState> {
                   })} // unable to apply css rules here for some dumb reason
                 />
               </div>
-              <div>
-                <button
-                  disabled={this.state.isFetching}
-                  onClick={this.startSongsFetching}
-                  className="btn"
-                >
-                  Start
-                </button>
-              </div>
+              <div>{actionButton}</div>
             </footer>
           </article>
           <article className="card">
@@ -116,40 +126,6 @@ export default class PlaylistDumper extends React.Component<IProps, IState> {
             <footer>Coming soon</footer>
           </article>
         </div>
-        {/* <Card.Group centered={true}>
-          <Card>
-            <Card.Content>
-              <Card.Header>Export your Liked Songs</Card.Header>
-            </Card.Content>
-            <Card.Content className="dumper-content">
-              <div>
-                <CircularProgressbar
-                  value={percentage}
-                  text={`${percentage}%`}
-                  styles={buildStyles({
-                    pathColor: "#1db954",
-                    textColor: "#1db954",
-                    // trailColor: "white"
-                  })} // unable to apply css rules here for some dumb reason
-                />
-              </div>
-              <div>
-                <Button
-                  disabled={this.state.isFetching}
-                  onClick={this.startSongsFetching}
-                >
-                  Start
-                </Button>
-              </div>
-            </Card.Content>
-          </Card>
-          <Card>
-            <Card.Content>
-              <Card.Header>Export your Playlists</Card.Header>
-            </Card.Content>
-            <Card.Content className="cardBody">Coming soon</Card.Content>
-          </Card>
-        </Card.Group> */}
       </div>
     );
   }
